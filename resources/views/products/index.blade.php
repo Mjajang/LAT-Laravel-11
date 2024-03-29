@@ -38,7 +38,7 @@
                                                 class="rounded" width="150px">
                                         </td>
                                         <td>{{ $product->title }}</td>
-                                        <td>{{ 'Rp ' . number_format($product->price, 2, ',', ',', '.') }}</td>
+                                        <td>{{ number_format($product->price, 0, ',', '.') }}</td>
                                         <td>{{ $product->stock }}</td>
                                         <td class="text-center">
                                             <form action="{{ route('products.destroy', $product->id) }}"
