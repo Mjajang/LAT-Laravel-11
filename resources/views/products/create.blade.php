@@ -27,6 +27,16 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
+
+                                {{-- preview image --}}
+                                <div class="col-md-4 mt-2" id="image-preview-container" style="display: none;">
+                                    <div class="card border-0 shadow-sm rounded">
+                                        <div class="card-body">
+                                            <img src="#" class="rounded" id="image-preview" style="width: 100%"
+                                                alt="Image Preview">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group mb-3">
@@ -86,7 +96,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-md btn-primary me-3">SAVE</button>
-                            <button type="reset" class="btn btn-md btn-warning">RESET</button>
+                            <button type="reset" class="btn btn-md btn-warning" id="reset-button">RESET</button>
                         </form>
                     </div>
                 </div>
@@ -98,6 +108,33 @@
     <script src="https://cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
     <script>
         CKEDITOR.replace('description');
+
+        const imageInput = document.querySelector('input[type="file"]');
+        const imagePreviewContainer = document.getElementById('image-preview-container');
+        const imagePreview = document.getElementById('image-preview');
+        const resetButton = document.getElementById('reset-button');
+
+
+        imageInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function() {
+                    imagePreview.src = reader.result;
+                    imagePreviewContainer.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = '#';
+                imagePreviewContainer.style.display = 'none';
+            }
+        });
+
+        resetButton.addEventListener('click', function() {
+            imagePreview.src = '#';
+            imageInput.value = '';
+            imagePreviewContainer.style.display = 'none';
+        });
     </script>
 </body>
 
